@@ -64,7 +64,7 @@ INSERT INTO Students (
     2, 5, 'GlobalSoft', 'LinkedIn', 'Chicago', '2025-06-15 11:00:00'
 );
 
-SELECT * FROM Students;SELECT * FROM Students;
+SELECT * FROM Students;
 
 
 CREATE TABLE employee(
