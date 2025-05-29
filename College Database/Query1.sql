@@ -18,6 +18,8 @@ INSERT INTO Courses (CourseName, Duration, Fees) VALUES
 ('Machine Learning & AI', 14, 1800),
 ('Cybersecurity Basics', 6, 900);
 
+
+
 SELECT * FROM Courses;
 
 SHOW TABLES;
@@ -64,6 +66,13 @@ INSERT INTO Students (
     2, 5, 'GlobalSoft', 'LinkedIn', 'Chicago', '2025-06-15 11:00:00'
 );
 
+INSERT INTO Students(FirstName, LastName, PhoneNumber, EmailID, EnrolledDate, SelectedCourses,
+    Expereience, Company, SourceOfJoining, Location, BatchStartDate) VALUES( 'Arya', 'Khadka', '555123456', 'arya@example.com', CURRENT_TIMESTAMP,
+    2, 5, 'GlobalSoft', 'LinkedIn', 'New York', '2025-06-15 11:00:00');
+
+INSERT INTO Students(FirstName, LastName, PhoneNumber, EmailID, EnrolledDate, SelectedCourses,
+    Expereience, Company, SourceOfJoining, Location, BatchStartDate) VALUES( 'Tanya', 'Khadka', '55123456', 'tanya@example.com', CURRENT_TIMESTAMP,
+    2, 1, 'GlobalSoft', 'LinkedIn', 'New York', '2025-06-15 11:00:00');
 SELECT * FROM Students;
 
 
@@ -102,7 +111,7 @@ WHERE age>30
 ORDER BY Salary DESC 
 LIMIT 1;
 
--- 3. Number of enrollemnets in the website college:
+-- 3. Number of enrollments in the website college:
 SELECT COUNT(*) as num_of_enrollments FROM Students;
 
 -- 4. Display the number of enrollments for courseid=2:
@@ -114,6 +123,18 @@ WHERE SelectedCourses=2;
 SELECT COUNT(*) FROM Students
 WHERE EnrolledDate LIKE '%-05-%';
 
--- 6.Update Bobs experience as 2 and company to "Google":
+-- 6.Update Bobs experience as 4 and company to "Google":
 UPDATE Students SET Expereience=2,Company='Google'
 WHERE StudentID=4;
+
+-- 7. Which courses have the highest enrollment rate:
+SELECT SelectedCourses,COUNT(*) AS 'no_of_courses' FROM Students
+GROUP BY SelectedCourses
+ORDER BY no_of_courses DESC LIMIT 1;
+
+-- 7. Which courses have the highest enrollment rate: Give CourseID,CourseName, Enrollement Count
+SELECT CourseID,CourseName,temp1.no_of_courses FROM Courses JOIN
+(SELECT SelectedCourses,COUNT(*) AS 'no_of_courses' FROM Students
+GROUP BY SelectedCourses
+ORDER BY no_of_courses DESC LIMIT 1) AS temp1
+ON temp1.SelectedCourses=Courses.CourseID;
